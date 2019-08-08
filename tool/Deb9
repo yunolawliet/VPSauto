@@ -18,18 +18,17 @@ wget "https://raw.githubusercontent.com/wangzki03/VPSauto/master/tool/premiummen
 # disable ipv6
 echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 
-
 # set time GMT +8
 ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
 
 # install webmin
-cd
-wget "https://raw.githubusercontent.com/wangzki03/premscript/master/webmin_1.801_all.deb"
-dpkg --install webmin_1.801_all.deb;
-apt-get -y -f install;
-sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
-rm /root/webmin_1.801_all.deb
-service webmin restart
+#cd
+#wget "https://raw.githubusercontent.com/wangzki03/premscript/master/webmin_1.801_all.deb"
+#dpkg --install webmin_1.801_all.deb;
+#apt-get -y -f install;
+#sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
+#rm /root/webmin_1.801_all.deb
+#service webmin restart
 
 # install screenfetch
 cd
@@ -185,11 +184,7 @@ script-security 2
 cipher none
 auth none
 http-proxy $MYIP 8080
-http-proxy-option CUSTOM-HEADER CONNECT HTTP/1.1
-http-proxy-option CUSTOM-HEADER Host weixin.qq.cn
-http-proxy-option CUSTOM-HEADER X-Forward-Host weixin.qq.cn
-http-proxy-option CUSTOM-HEADER Connection: Keep-Alive
-http-proxy-option CUSTOM-HEADER Proxy-Connection: keep-alive
+http-proxy-option CUSTOM-HEADER "POST https://e9413.g.akamaiedge.net HTTP/1.0"
 END
 echo '<ca>' >> /home/vps/public_html/client.ovpn
 cat /etc/openvpn/ca.crt >> /home/vps/public_html/client.ovpn
@@ -324,8 +319,6 @@ iptables-restore < /etc/iptables.up.rules
 sed -i 's/\/var\/www\/html;/\/home\/vps\/public_html\/;/g' /etc/nginx/sites-enabled/default
 cp /var/www/html/index.nginx-debian.html /home/vps/public_html/index.html
 
-
-
 # Create and Configure rc.local
 cat > /etc/rc.local <<-END
 #!/bin/sh -e
@@ -378,9 +371,6 @@ echo "DEVICE WILL REBOOT IN 10 SECONDS"
 echo "PLEASE WAIT PATIENTLY AND RELOGIN TO YOUR VPS"
 echo " "
 echo "--------------------------- Configuration Setup Server -------------------------"
-echo "                         Copyright HostingTermurah.net                          "
-echo "                                Modified by wangzki                        "
-echo "--------------------------------------------------------------------------------"
 echo ""  | tee -a log-install.txt
 echo "Server Information"  | tee -a log-install.txt
 echo "   - Timezone    : Asia/Manila (GMT +8)"  | tee -a log-install.txt
@@ -408,7 +398,6 @@ echo "   - Installation Log        : cat /root/log-install.txt"  | tee -a log-in
 echo ""  | tee -a log-install.txt
 echo "   - Webmin                  : http://$MYIP:10000/"  | tee -a log-install.txt
 echo ""
-echo "------------------------------ Modified by Wangzki -----------------------------"
 echo "-----Rebooting your VPS -----"
 sleep 5
 reboot
