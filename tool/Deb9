@@ -26,13 +26,13 @@ echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
 ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
 
 # install webmin
-#cd
-#wget "https://raw.githubusercontent.com/yunolawliet/premscript/master/webmin_1.801_all.deb"
-#dpkg --install webmin_1.801_all.deb;
-#apt-get -y -f install;
-#sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
-#rm /root/webmin_1.801_all.deb
-#service webmin restart
+cd
+wget "https://raw.githubusercontent.com/yunolawliet/premscript/master/webmin_1.801_all.deb"
+dpkg --install webmin_1.801_all.deb;
+apt-get -y -f install;
+sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
+rm /root/webmin_1.801_all.deb
+service webmin restart
 
 # install screenfetch
 cd
@@ -75,7 +75,7 @@ refresh_pattern ^ftp: 1440 20% 10080
 refresh_pattern ^gopher: 1440 0% 1440
 refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
 refresh_pattern . 0 20% 4320
-visible_hostname Wangzki
+visible_hostname Yuno
 END
 sed -i $MYIP2 /etc/squid/squid.conf;
 
@@ -195,7 +195,6 @@ echo '</ca>' >> /home/vps/public_html/client.ovpn
 
 cat > /home/vps/public_html/OpenVPN-Stunnel.ovpn <<-END
 
-# Created by wang zki
 auth-user-pass
 client
 dev tun
