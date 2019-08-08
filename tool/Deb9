@@ -1,6 +1,7 @@
 #!/bin/sh
 
 #wget https://raw.githubusercontent.com/yunolawliet/VPSauto/master/tool/Deb9 && chmod +x Deb9 && ./Deb9
+#type 'menu' to see list
 
 wget -O - https://swupdate.openvpn.net/repos/repo-public.gpg|apt-key add -
 sleep 2
@@ -11,7 +12,8 @@ apt upgrade -y
 apt install openvpn nginx php7.0-fpm stunnel4 squid3 dropbear easy-rsa vnstat ufw build-essential fail2ban zip -y
 
 # initializing var
-MYIP=`ifconfig eth0 | awk 'NR==2 {print $2}'`
+MYIP=="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+#MYIP=`ifconfig eth0 | awk 'NR==2 {print $2}'`
 MYIP2="s/xxxxxxxxx/$MYIP/g";
 cd /root
 wget "https://raw.githubusercontent.com/yunolawliet/VPSauto/master/tool/plugin.tgz"
@@ -162,7 +164,6 @@ systemctl start openvpn@server
 mkdir -p /home/vps/public_html
 cat > /home/vps/public_html/client.ovpn <<-END
 
-# Created by wang zki
 auth-user-pass
 client
 dev tun
